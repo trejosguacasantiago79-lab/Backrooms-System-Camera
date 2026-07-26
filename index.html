@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Backrooms Surveillance System</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ===================================== -->
+<!-- LOADING SCREEN -->
+<!-- ===================================== -->
+
+<div id="loadingScreen">
+
+    <div class="loadingContainer">
+
+        <div class="loadingLogo">
+
+            <h1>BACKROOMS</h1>
+
+            <h2>SURVEILLANCE SYSTEM</h2>
+
+            <span>SECURITY CLEARANCE LEVEL IV</span>
+
+        </div>
+
+        <div class="loadingBar">
+
+            <div id="loadingFill"></div>
+
+        </div>
+
+        <p id="loadingStatus">
+
+            Initializing Surveillance...
+
+        </p>
+
+        <div class="loadingFooter">
+
+            BUILD v1.0
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===================================== -->
+<!-- MAIN SYSTEM -->
+<!-- ===================================== -->
+
+<div id="system" class="hidden">
+
+<header class="topBar">
+
+<div class="logo">
+
+<h1>
+
+BACKROOMS SURVEILLANCE SYSTEM
+
+</h1>
+
+<span>
+
+LEVEL 4 SECURITY CLEARANCE
+
+</span>
+
+</div>
+
+<div class="systemInfo">
+
+<div class="recording">
+
+<span class="recordDot"></span>
+
+REC
+
+</div>
+
+<div class="systemState">
+
+ONLINE
+
+</div>
+
+<div class="serverStatus">
+
+SERVER A-01
+
+</div>
+
+<div id="date">
+
+20/07/2026
+
+</div>
+
+<div id="clock">
+
+00:00:00
+
+</div>
+
+</div>
+
+</header>
+
+<!-- ===================================== -->
+<!-- CAMERA SECTION -->
+<!-- ===================================== -->
+
+<main>
+
+<div class="cameraFrame crt">
+
+<img
+id="camera"
+src="img/cam1.png"
+alt="Camera Feed">
+
+<div class="cameraNoise"></div>
+
+<div class="cameraCRT"></div>
+
+<div class="cameraGlitch"></div>
+
+<div class="cameraCorner topLeft">
+CAM-01
+</div>
+
+<div class="cameraCorner topRight">
+SIGNAL 100%
+</div>
+
+<div class="cameraCorner bottomLeft">
+LIVE FEED
+</div>
+
+<div class="cameraCorner bottomRight">
+REC ●
+</div>
+
+<div class="cameraOverlay">
+
+<div class="cameraHUD">
+
+<div class="cameraHeader">
+
+<span class="cameraID" id="cameraTitle">
+CAM-01
+</span>
+
+<span class="cameraState">
+ACTIVE
+</span>
+
+</div>
+
+<div class="cameraLocationBox">
+
+<div class="cameraLabel">
+LOCATION
+</div>
+
+<div id="cameraLocation">
+LEVEL 0
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ===================================== -->
+<!-- CAMERA INFORMATION -->
+<!-- ===================================== -->
+
+<div class="cameraData">
+
+<div>
+
+<span class="label">
+CAMERA
+</span>
+
+<span id="cameraName">
+CAM-01
+</span>
+
+</div>
+
+<div>
+
+<span class="label">
+STATUS
+</span>
+
+<span id="cameraStatus">
+LIVE
+</span>
+
+</div>
+
+<div>
+
+<span class="label">
+SIGNAL
+</span>
+
+<span id="signal">
+100%
+</span>
+
+</div>
+
+<div>
+
+<span class="label">
+SERVER
+</span>
+
+<span>
+A-01
+</span>
+
+</div>
+
+</div>
+
+</main>
+
+<!-- ===================================== -->
+<!-- CONTROLS -->
+<!-- ===================================== -->
+
+<section class="controls">
+
+<button id="previousButton" class="systemButton">
+
+<span>◀</span>
+
+<span>PREVIOUS CAMERA</span>
+
+</button>
+
+<button id="nextButton" class="systemButton">
+
+<span>NEXT CAMERA</span>
+
+<span>▶</span>
+
+</button>
+
+</section>
+
+<!-- ===================================== -->
+<!-- CAMERA SELECTOR -->
+<!-- ===================================== -->
+
+<section class="cameraSelector">
+
+<button class="cameraButton active" data-id="0">CAM 01</button>
+<button class="cameraButton" data-id="1">CAM 02</button>
+<button class="cameraButton" data-id="2">CAM 03</button>
+<button class="cameraButton" data-id="3">CAM 04</button>
+<button class="cameraButton" data-id="4">CAM 05</button>
+<button class="cameraButton" data-id="5">CAM 06</button>
+
+<button class="cameraButton" data-id="6">CAM 07</button>
+<button class="cameraButton" data-id="7">CAM 08</button>
+<button class="cameraButton" data-id="8">CAM 09</button>
+<button class="cameraButton" data-id="9">CAM 10</button>
+<button class="cameraButton" data-id="10">CAM 11</button>
+<button class="cameraButton" data-id="11">CAM 12</button>
+
+</section>
+
+<!-- ===================================== -->
+<!-- ALERT -->
+<!-- ===================================== -->
+
+<div id="systemAlert" class="hidden">
+
+<div class="alertTitle">
+
+⚠ SYSTEM WARNING
+
+</div>
+
+<div class="alertText">
+
+SIGNAL LOST
+
+</div>
+
+</div>
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+<div class="footerLeft">
+
+<span>
+
+BACKROOMS SURVEILLANCE SYSTEM
+
+</span>
+
+</div>
+
+<div class="footerCenter">
+
+<span>
+
+BUILD v1.0 ALPHA
+
+</span>
+
+</div>
+
+<div class="footerRight">
+
+<span>
+
+AUTHORIZED ACCESS ONLY
+
+</span>
+
+</div>
+
+</footer>
+
+</div>
+
+<!-- ===================================== -->
+<!-- AUDIO -->
+<!-- ===================================== -->
+
+<audio
+id="clickSound"
+src="audio/click.mp3"
+preload="auto">
+</audio>
+
+<audio
+id="ambientSound"
+src="audio/ambience.mp3"
+loop
+preload="auto">
+</audio>
+
+<!-- ===================================== -->
+<!-- EFFECTS -->
+<!-- ===================================== -->
+
+<div id="flash"></div>
+
+<div id="scanline"></div>
+
+<div id="vignette"></div>
+
+<!-- ===================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================== -->
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

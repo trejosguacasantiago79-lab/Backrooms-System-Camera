@@ -1,0 +1,1369 @@
+/* ========================================= */
+/* BACKROOMS SURVEILLANCE SYSTEM */
+/* BUILD 0.1.0 ALPHA */
+/* ========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --bg:#050505;
+
+    --panel:#0d0d0d;
+
+    --border:#1b1b1b;
+
+    --green:#4cff73;
+
+    --greenSoft:#2d8c48;
+
+    --text:#d9ffd9;
+
+    --red:#ff4545;
+
+    --shadow:rgba(76,255,115,.18);
+
+}
+
+body{
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    font-family:"Share Tech Mono",monospace;
+
+    overflow:hidden;
+
+}
+
+/* ========================================= */
+/* LOADING */
+/* ========================================= */
+
+#loadingScreen{
+
+    position:fixed;
+
+    inset:0;
+
+    background:#000;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.loadingContainer{
+
+    width:520px;
+
+    text-align:center;
+
+}
+
+.loadingContainer h1{
+
+    color:var(--green);
+
+    font-size:42px;
+
+    letter-spacing:8px;
+
+}
+
+.loadingContainer h2{
+
+    margin-top:10px;
+
+    color:#7cff9d;
+
+    font-size:18px;
+
+    letter-spacing:5px;
+
+}
+
+.loadingBar{
+
+    width:100%;
+
+    height:12px;
+
+    margin-top:45px;
+
+    border:1px solid var(--greenSoft);
+
+    background:#101010;
+
+    overflow:hidden;
+
+}
+
+#loadingFill{
+
+    width:0%;
+
+    height:100%;
+
+    background:var(--green);
+
+}
+
+#loadingStatus{
+
+    margin-top:18px;
+
+    color:#9effb2;
+
+    letter-spacing:2px;
+
+}
+
+/* ========================================= */
+/* MAIN */
+/* ========================================= */
+
+.hidden{
+
+    display:none;
+
+}
+
+#system{
+
+    width:96%;
+
+    height:100vh;
+
+    margin:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* ========================================= */
+/* TOP BAR */
+/* ========================================= */
+
+.topBar{
+
+    height:70px;
+
+    margin-top:12px;
+
+    padding:0 22px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:linear-gradient(to bottom,#121212,#090909);
+
+    border:1px solid #2d8c48;
+
+    box-shadow:
+        0 0 20px rgba(76,255,115,.12),
+        inset 0 0 12px rgba(76,255,115,.04);
+
+}
+
+.logo h1{
+
+    color:var(--green);
+
+    font-size:28px;
+
+    letter-spacing:4px;
+
+}
+
+.logo span{
+
+    display:block;
+
+    margin-top:6px;
+
+    color:#86d79d;
+
+    font-size:13px;
+
+}
+
+.systemInfo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+    font-size:15px;
+
+}
+
+.recording{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.recordDot{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    animation:blink 1s infinite;
+
+}
+
+@keyframes blink{
+
+    50%{
+
+        opacity:.2;
+
+    }
+
+}
+
+/* ========================================= */
+/* CAMERA */
+/* ========================================= */
+
+main{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.cameraFrame{
+
+    position:relative;
+
+    width:100%;
+
+    height:65vh;
+
+    border:2px solid var(--greenSoft);
+
+    background:#000;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 0 30px rgba(76,255,115,.10),
+        inset 0 0 40px rgba(76,255,115,.05);
+
+}
+
+#camera{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.cameraOverlay{
+
+    position:absolute;
+
+    left:20px;
+
+    bottom:20px;
+
+    color:white;
+
+    text-shadow:0 0 10px black;
+
+}
+
+#cameraTitle{
+
+    font-size:34px;
+
+    color:var(--green);
+
+}
+
+#cameraLocation{
+
+    margin-top:8px;
+
+    color:#9effb2;
+
+    letter-spacing:2px;
+
+}
+
+.cameraData{
+
+    margin-top:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    padding:18px;
+
+}
+
+.cameraData div{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+
+}
+
+.label{
+
+    color:#76c88f;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+}
+
+#cameraName,
+#cameraStatus,
+#signal{
+
+    font-size:18px;
+
+    color:var(--green);
+
+}
+
+/* ========================================= */
+/* CONTROLS */
+/* ========================================= */
+
+.controls{
+
+    margin-top:20px;
+
+    display:flex;
+
+    gap:20px;
+
+}
+
+.controls button{
+
+    flex:1;
+
+    height:55px;
+
+    background:#111;
+
+    color:var(--green);
+
+    border:1px solid var(--greenSoft);
+
+    font-family:inherit;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.controls button:hover{
+
+    background:var(--green);
+
+    color:#000;
+
+    box-shadow:0 0 18px rgba(76,255,115,.35);
+
+}
+
+/* ========================================= */
+/* CAMERA SELECTOR */
+/* ========================================= */
+
+.cameraSelector{
+
+    margin-top:20px;
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:12px;
+
+}
+
+.cameraButton{
+
+    height:50px;
+
+    background:#111;
+
+    color:var(--green);
+
+    border:1px solid var(--greenSoft);
+
+    font-family:inherit;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.cameraButton:hover{
+
+    background:var(--green);
+
+    color:#000;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 0 18px rgba(76,255,115,.35);
+
+}
+
+.cameraButton.active{
+
+    background:var(--green);
+
+    color:#000;
+
+    font-weight:bold;
+
+    box-shadow:0 0 20px rgba(76,255,115,.45);
+
+}
+
+/* ========================================= */
+/* FOOTER */
+/* ========================================= */
+
+footer{
+
+    margin:18px 0;
+
+    padding:12px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border:1px solid var(--border);
+
+    background:var(--panel);
+
+    color:#88d89d;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+}
+
+/* ========================================= */
+/* RESPONSIVE */
+/* ========================================= */
+
+@media(max-width:900px){
+
+    .topBar{
+
+        flex-direction:column;
+
+        height:auto;
+
+        padding:15px;
+
+        gap:15px;
+
+    }
+
+    .systemInfo{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:15px;
+
+    }
+
+    .cameraFrame{
+
+        height:50vh;
+
+    }
+
+    .cameraData{
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+    .cameraSelector{
+
+        grid-template-columns:repeat(4,1fr);
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .logo h1{
+
+        font-size:18px;
+
+    }
+
+    .controls{
+
+        flex-direction:column;
+
+    }
+
+    .cameraSelector{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+/* ========================================= */
+/* PREPARADO PARA EFECTOS */
+/* ========================================= */
+
+.crt{
+
+    position:relative;
+
+}
+
+.crt::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:linear-gradient(
+        rgba(255,255,255,.02) 50%,
+        rgba(0,0,0,.05) 50%
+    );
+
+    background-size:100% 4px;
+
+    opacity:.25;
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 1 */
+/* CAMERA FRAME CINEMATIC */
+/* ========================================= */
+
+.cameraFrame{
+
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+
+    border:2px solid rgba(76,255,115,.45);
+
+    border-radius:8px;
+
+    background:#000;
+
+    box-shadow:
+        0 0 8px rgba(76,255,115,.10),
+        0 0 25px rgba(76,255,115,.08),
+        0 0 60px rgba(0,0,0,.75),
+        inset 0 0 40px rgba(76,255,115,.05);
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        filter .35s ease;
+
+}
+
+.cameraFrame:hover{
+
+    transform:scale(1.003);
+
+    box-shadow:
+        0 0 12px rgba(76,255,115,.18),
+        0 0 30px rgba(76,255,115,.12),
+        0 0 70px rgba(0,0,0,.85),
+        inset 0 0 45px rgba(76,255,115,.08);
+
+}
+
+#camera{
+
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:
+        brightness(.95)
+        contrast(1.08)
+        saturate(.90);
+
+    transition:
+        transform .45s ease,
+        filter .45s ease;
+
+}
+
+.cameraFrame:hover #camera{
+
+    transform:scale(1.01);
+
+    filter:
+        brightness(.98)
+        contrast(1.12)
+        saturate(.95);
+
+}
+
+/* Oscurecimiento de bordes */
+
+.cameraFrame::before{
+
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 55%,
+            rgba(0,0,0,.18) 78%,
+            rgba(0,0,0,.45) 100%
+        );
+
+    z-index:4;
+
+}
+
+/* Glow superior */
+
+.cameraFrame::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:2px;
+
+    background:rgba(76,255,115,.45);
+
+    box-shadow:
+        0 0 8px rgba(76,255,115,.35),
+        0 0 20px rgba(76,255,115,.25);
+
+    opacity:.85;
+
+    z-index:5;
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 2 */
+/* ANALOG NOISE */
+/* ========================================= */
+
+.cameraNoise{
+
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:6;
+
+    opacity:.06;
+
+    mix-blend-mode:screen;
+
+    background-image:
+        repeating-radial-gradient(
+            circle at center,
+            rgba(255,255,255,.08) 0px,
+            rgba(255,255,255,0) 2px,
+            transparent 4px
+        );
+
+    background-size:180px 180px;
+
+    animation:
+        noiseMove .25s steps(4) infinite,
+        noiseFlicker 2s infinite;
+
+}
+
+@keyframes noiseMove{
+
+    0%{
+        transform:translate(0,0);
+    }
+
+    25%{
+        transform:translate(-2px,1px);
+    }
+
+    50%{
+        transform:translate(2px,-1px);
+    }
+
+    75%{
+        transform:translate(-1px,2px);
+    }
+
+    100%{
+        transform:translate(0,0);
+    }
+
+}
+
+@keyframes noiseFlicker{
+
+    0%{
+        opacity:.03;
+    }
+
+    20%{
+        opacity:.05;
+    }
+
+    50%{
+        opacity:.08;
+    }
+
+    75%{
+        opacity:.04;
+    }
+
+    100%{
+        opacity:.03;
+    }
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 3 */
+/* CRT SCREEN */
+/* ========================================= */
+
+.cameraCRT{
+
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:7;
+
+    opacity:.22;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.045) 0px,
+            rgba(255,255,255,.045) 1px,
+            transparent 2px,
+            transparent 4px
+        );
+
+    animation:
+        crtScan 8s linear infinite;
+
+}
+
+/* Barrido del monitor */
+
+.cameraCRT::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:-35%;
+
+    width:100%;
+    height:35%;
+
+    background:linear-gradient(
+        to bottom,
+        transparent,
+        rgba(76,255,115,.08),
+        transparent
+    );
+
+    animation:scanMove 6s linear infinite;
+
+}
+
+/* Ligero brillo central */
+
+.cameraCRT::after{
+
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.02),
+            transparent 70%
+        );
+
+}
+
+/* ========================================= */
+/* ANIMACIONES CRT */
+/* ========================================= */
+
+@keyframes crtScan{
+
+    from{
+
+        background-position:0 0;
+
+    }
+
+    to{
+
+        background-position:0 8px;
+
+    }
+
+}
+
+@keyframes scanMove{
+
+    from{
+
+        top:-35%;
+
+    }
+
+    to{
+
+        top:100%;
+
+    }
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 4 */
+/* GLITCH LAYER */
+/* ========================================= */
+
+.cameraGlitch{
+
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:8;
+
+    opacity:0;
+
+    mix-blend-mode:screen;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            rgba(255,0,0,.12) 2px,
+            transparent 4px,
+            rgba(0,255,255,.08) 8px,
+            transparent 12px
+        );
+
+    transform:translateX(0);
+
+}
+
+/* Se activa agregando la clase .active */
+
+.cameraGlitch.active{
+
+    animation:
+        glitchFlash .15s linear,
+        glitchShift .15s linear;
+
+}
+
+@keyframes glitchFlash{
+
+    0%{
+
+        opacity:0;
+
+    }
+
+    15%{
+
+        opacity:.55;
+
+    }
+
+    40%{
+
+        opacity:.25;
+
+    }
+
+    70%{
+
+        opacity:.45;
+
+    }
+
+    100%{
+
+        opacity:0;
+
+    }
+
+}
+
+@keyframes glitchShift{
+
+    0%{
+
+        transform:translateX(0);
+
+    }
+
+    20%{
+
+        transform:translateX(-4px);
+
+    }
+
+    40%{
+
+        transform:translateX(5px);
+
+    }
+
+    60%{
+
+        transform:translateX(-2px);
+
+    }
+
+    80%{
+
+        transform:translateX(2px);
+
+    }
+
+    100%{
+
+        transform:translateX(0);
+
+    }
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 5 */
+/* SYSTEM ALERT */
+/* ========================================= */
+
+#systemAlert{
+
+    width:100%;
+
+    margin:18px 0;
+
+    padding:14px;
+
+    text-align:center;
+
+    border:1px solid rgba(255,70,70,.55);
+
+    background:rgba(120,0,0,.18);
+
+    color:#ff5c5c;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    text-shadow:
+        0 0 8px rgba(255,0,0,.45);
+
+    box-shadow:
+        0 0 18px rgba(255,0,0,.15),
+        inset 0 0 18px rgba(255,0,0,.08);
+
+}
+
+#systemAlert.hidden{
+
+    display:none;
+
+}
+
+#systemAlert.show{
+
+    display:block;
+
+    animation:
+        alertBlink .8s infinite,
+        alertAppear .35s ease-out;
+
+}
+
+@keyframes alertBlink{
+
+    0%,100%{
+
+        opacity:1;
+
+    }
+
+    50%{
+
+        opacity:.35;
+
+    }
+
+}
+
+@keyframes alertAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 6 */
+/* CAMERA FLASH */
+/* ========================================= */
+
+#flash{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:white;
+
+    opacity:0;
+
+    z-index:99999;
+
+}
+
+/* Activado por JavaScript */
+
+#flash.active{
+
+    animation:cameraFlash .22s ease-out;
+
+}
+
+@keyframes cameraFlash{
+
+    0%{
+
+        opacity:0;
+
+    }
+
+    15%{
+
+        opacity:.9;
+
+    }
+
+    35%{
+
+        opacity:.45;
+
+    }
+
+    100%{
+
+        opacity:0;
+
+    }
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 7 */
+/* MONITOR AMBIENCE */
+/* ========================================= */
+
+/* Parpadeo muy suave del monitor */
+
+.cameraFrame{
+
+    animation:monitorFlicker 12s infinite;
+
+}
+
+@keyframes monitorFlicker{
+
+    0%,100%{
+
+        filter:brightness(1);
+
+    }
+
+    8%{
+
+        filter:brightness(.995);
+
+    }
+
+    17%{
+
+        filter:brightness(1.01);
+
+    }
+
+    34%{
+
+        filter:brightness(.99);
+
+    }
+
+    60%{
+
+        filter:brightness(1);
+
+    }
+
+    82%{
+
+        filter:brightness(1.005);
+
+    }
+
+}
+
+/* Brillo del REC */
+
+.recordDot{
+
+    box-shadow:
+        0 0 5px #ff4545,
+        0 0 12px #ff4545,
+        0 0 20px rgba(255,69,69,.5);
+
+}
+
+/* Transiciones generales */
+
+button,
+.cameraButton,
+.topBar,
+.cameraData,
+footer{
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+/* Selección desactivada */
+
+body{
+
+    user-select:none;
+
+}
+
+/* Cursor sobre elementos interactivos */
+
+button{
+
+    cursor:pointer;
+
+}
+
+/* ========================================= */
+/* V1.0 RELEASE - BLOQUE 8 */
+/* PERFORMANCE & FINAL POLISH */
+/* ========================================= */
+
+/* Optimización para animaciones */
+
+.cameraFrame,
+#camera,
+.cameraNoise,
+.cameraCRT,
+.cameraGlitch,
+#flash{
+
+    will-change:
+        transform,
+        opacity,
+        filter;
+
+    backface-visibility:hidden;
+
+    transform:translateZ(0);
+
+}
+
+/* Imágenes más nítidas */
+
+#camera{
+
+    image-rendering:auto;
+
+}
+
+/* Scroll desactivado */
+
+html,
+body{
+
+    overflow:hidden;
+
+}
+
+/* Scrollbar (por si en el futuro aparece) */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#080808;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2d8c48;
+
+    border-radius:4px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#4cff73;
+
+}
+
+/* Reduce animaciones si el usuario lo prefiere */
+
+@media (prefers-reduced-motion: reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation:none !important;
+
+        transition:none !important;
+
+    }
+
+}
